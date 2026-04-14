@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Системное агентство ИИ — AI-системы под ключ</title>
+  <meta name="description" content="Строим AI-системы под ключ: агенты, автоматизация, интеграции. Telegram-боты, RAG, оркестрация агентов для бизнеса.">
+  <meta property="og:title" content="Системное агентство ИИ">
+  <meta property="og:description" content="Строим AI-системы под ключ: агенты, автоматизация, интеграции.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #0f0f1a;
+      --accent: #6c63ff;
+      --accent-light: #8b85ff;
+      --accent-glow: rgba(108, 99, 255, 0.3);
+      --text: #f0f0f5;
+      --text-muted: #8888a8;
+      --glass-bg: rgba(255, 255, 255, 0.04);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --radius: 16px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NOISE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 10, 15, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-logo span {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* SECTIONS */
+    section { position: relative; z-index: 1; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 24px 80px;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(108, 99, 255, 0.25) 0%, transparent 60%),
+        var(--bg);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 13px;
+      color: var(--accent-light);
+      margin-bottom: 32px;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #4ade80;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #4ade80;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #fff 30%, var(--accent-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.2s;
+      box-shadow: 0 0 30px var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px var(--accent-glow);
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--glass-border);
+      color: var(--text);
+      padding: 14px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 16px;
+      transition: all 0.2s;
+      background: var(--glass-bg);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent-light);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      margin-top: 64px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent-light);
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* SERVICES */
+    .services {
+      padding: 100px 0;
+      background: var(--bg2);
+    }
+
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      color: var(--text-muted);
+      font-size: 17px;
+      max-width: 560px;
+    }
+
+    .section-header { margin-bottom: 60px; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: all 0.3s;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .service-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-card:hover {
+      border-color: var(--accent);
+      background: rgba(108, 99, 255, 0.06);
+      transform: translateY(-4px);
+    }
+
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(108, 99, 255, 0.15);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .service-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .service-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* PRICING */
+    .pricing {
+      padding: 100px 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(108, 99, 255, 0.12) 0%, transparent 60%),
+        var(--bg);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 60px;
+    }
+
+    .plan {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      transition: all 0.3s;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .plan.visible { opacity: 1; transform: translateY(0); }
+
+    .plan.featured {
+      border-color: var(--accent);
+      background: rgba(108, 99, 255, 0.08);
+      position: relative;
+    }
+
+    .plan-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 100px;
+    }
+
+    .plan-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .plan-price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--accent-light);
+      margin-bottom: 4px;
+    }
+
+    .plan-price span {
+      font-size: 16px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .plan-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .plan-features {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+
+    .plan-features li {
+      font-size: 14px;
+      color: var(--text-muted);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--glass-border);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .plan-features li:last-child { border-bottom: none; }
+
+    .plan-features li::before {
+      content: '✓';
+      color: var(--accent-light);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .plan-cta {
+      display: block;
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+
+    .plan-cta.outline {
+      border: 1px solid var(--glass-border);
+      color: var(--text);
+    }
+
+    .plan-cta.outline:hover {
+      border-color: var(--accent);
+      color: var(--accent-light);
+    }
+
+    .plan-cta.solid {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .plan-cta.solid:hover {
+      background: var(--accent-light);
+    }
+
+    /* FORM */
+    .contact {
+      padding: 100px 0;
+      background: var(--bg2);
+    }
+
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .contact-info h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .contact-info p {
+      color: var(--text-muted);
+      font-size: 16px;
+      margin-bottom: 36px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 15px;
+      transition: color 0.2s;
+    }
+
+    .contact-link:hover { color: var(--accent-light); }
+
+    .contact-link-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .form {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 36px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+    }
+
+    .form-submit {
+      display: block;
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 0 24px var(--accent-glow);
+    }
+
+    .form-submit:hover {
+      background: var(--accent-light);
+      transform: translateY(-1px);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 40px 24px;
+      border-top: 1px solid var(--glass-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      background: var(--bg);
+    }
+
+    .footer-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .footer-copy {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .contact-wrapper {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .hero-stats {
+        gap: 24px;
+      }
+
+      nav { padding: 12px 16px; }
+
+      .form { padding: 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .pricing-grid,
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span>⚡</span>
+    Агентство ИИ
+  </a>
+  <a href="#contact" class="nav-cta">Обсудить проект</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">Принимаем проекты в 2026</div>
+    <h1>Системное<br>агентство ИИ</h1>
+    <p>Строим AI-системы под ключ: агенты, автоматизация, интеграции для вашего бизнеса</p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn-primary">Обсудить проект</a>
+      <a href="#services" class="btn-secondary">Наши услуги</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-number">30+</div>
+        <div class="stat-label">Проектов сдано</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">14</div>
+        <div class="stat-label">Специализированных агентов</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">3x</div>
+        <div class="stat-label">Ускорение процессов</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Услуги</div>
+      <h2 class="section-title">Что мы строим</h2>
+      <p class="section-sub">Полный цикл: от проектирования архитектуры до запуска в продакшн</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🤖</div>
+        <h3>AI-оркестрация агентов</h3>
+        <p>Мультиагентные системы с распределением ролей, memory-слоем и верификацией результатов. Claude, GPT, Gemini в связке.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✈️</div>
+        <h3>Telegram-боты с ИИ</h3>
+        <p>Умные боты с контекстом, командами, state management и интеграцией с вашими сервисами. Polling и webhook.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚙️</div>
+        <h3>Автоматизация процессов</h3>
+        <p>Парсинг, генерация контента, мониторинг, рассылки, CRM-интеграции. Что делается вручную — делаем автоматически.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🧠</div>
+        <h3>RAG и базы знаний</h3>
+        <p>Загружаем ваши документы, сайты, данные в векторное хранилище. Модель отвечает строго по вашей базе.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Тарифы</div>
+      <h2 class="section-title">Стоимость</h2>
+      <p class="section-sub">Прозрачное ценообразование. Оплата поэтапно, риски минимальны.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="plan">
+        <div class="plan-name">Старт</div>
+        <div class="plan-price">50 000 ₽ <span>/ от</span></div>
+        <div class="plan-desc">Для малого бизнеса и первого AI-проекта</div>
+        <ul class="plan-features">
+          <li>Один специализированный агент</li>
+          <li>Telegram-бот или API-интеграция</li>
+          <li>До 3 инструментов и источников</li>
+          <li>Базовая память и контекст</li>
+          <li>2 недели поддержки</li>
+        </ul>
+        <a href="https://t.me/pustem754?text=Интересует%20тариф%20Старт" class="plan-cta outline" target="_blank">Обсудить</a>
+      </div>
+      <div class="plan featured">
+        <div class="plan-badge">Популярный</div>
+        <div class="plan-name">Бизнес</div>
+        <div class="plan-price">150 000 ₽ <span>/ от</span></div>
+        <div class="plan-desc">Для компаний, готовых автоматизировать ключевые процессы</div>
+        <ul class="plan-features">
+          <li>Мультиагентная система (до 5 агентов)</li>
+          <li>MCP-серверы и внешние API</li>
+          <li>Telegram + веб-интерфейс</li>
+          <li>Память, RAG, аналитика</li>
+          <li>Observability и логирование</li>
+          <li>1 месяц поддержки</li>
+        </ul>
+        <a href="https://t.me/pustem754?text=Интересует%20тариф%20Бизнес" class="plan-cta solid" target="_blank">Обсудить</a>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price">500 000 ₽ <span>/ от</span></div>
+        <div class="plan-desc">Для крупных задач с полным AI-преобразованием</div>
+        <ul class="plan-features">
+          <li>Полная агентная экосистема</li>
+          <li>Кастомные MCP-серверы</li>
+          <li>Fine-tuning и обучение на данных</li>
+          <li>Деплой на вашей инфраструктуре</li>
+          <li>Обучение команды</li>
+          <li>3 месяца поддержки и развития</li>
+        </ul>
+        <a href="https://t.me/pustem754?text=Интересует%20тариф%20Enterprise" class="plan-cta outline" target="_blank">Обсудить</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-wrapper">
+      <div class="contact-info">
+        <div class="section-label">Контакт</div>
+        <h2>Расскажите<br>о своей задаче</h2>
+        <p>Опишите, что хотите автоматизировать или какую AI-систему нужно построить. Отвечаю в течение нескольких часов.</p>
+        <div class="contact-links">
+          <a href="https://t.me/pustem754" class="contact-link" target="_blank">
+            <div class="contact-link-icon">✈️</div>
+            @pustem754 в Telegram
+          </a>
+        </div>
+      </div>
+      <div class="form">
+        <div class="form-group">
+          <label for="name">Ваше имя</label>
+          <input type="text" id="name" placeholder="Иван Иванов">
+        </div>
+        <div class="form-group">
+          <label for="company">Компания</label>
+          <input type="text" id="company" placeholder="ООО Ромашка">
+        </div>
+        <div class="form-group">
+          <label for="task">Задача</label>
+          <textarea id="task" placeholder="Опишите, что хотите автоматизировать или какую AI-систему нужно построить..."></textarea>
+        </div>
+        <a id="tg-send" href="https://t.me/pustem754" class="form-submit" target="_blank">
+          Отправить в Telegram
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Системное агентство ИИ</a>
+  <div class="footer-copy">© 2026 Системное агентство ИИ. Все права защищены.</div>
+</footer>
+
+<script>
+  // Animate on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .plan').forEach(el => observer.observe(el));
+
+  // Telegram form link builder
+  document.getElementById('tg-send').addEventListener('click', function(e) {
+    const name = document.getElementById('name').value.trim();
+    const company = document.getElementById('company').value.trim();
+    const task = document.getElementById('task').value.trim();
+
+    const parts = [];
+    if (name) parts.push('Имя: ' + name);
+    if (company) parts.push('Компания: ' + company);
+    if (task) parts.push('Задача: ' + task);
+
+    if (parts.length > 0) {
+      const text = encodeURIComponent(parts.join('\n'));
+      this.href = 'https://t.me/pustem754?text=' + text;
+    } else {
+      this.href = 'https://t.me/pustem754';
+    }
+  });
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
