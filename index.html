@@ -889,7 +889,9 @@
 
   document.querySelectorAll('.service-card, .plan').forEach(el => observer.observe(el));
 
-  // Form submission via Telegram Bot API
+  // Form submission via backend API
+  const LEAD_API = 'https://expected-anytime-connect-submit.trycloudflare.com/api/lead';
+
   document.getElementById('form-btn').addEventListener('click', async function() {
     const btn = this;
     const name = document.getElementById('name').value.trim();
@@ -904,26 +906,18 @@
     btn.disabled = true;
     btn.textContent = 'Отправляем...';
 
-    const lines = ['📬 Новая заявка с сайта'];
-    if (name) lines.push('👤 Имя: ' + name);
-    if (company) lines.push('🏢 Компания: ' + company);
-    if (task) lines.push('📝 Задача: ' + task);
-    const text = lines.join('\n');
-
     try {
-      const token = '8771724456:AAGkjVHJVZAQQyDYaethQQNKHApx8r4D9Ns';
-      const chatId = '2061792301';
-      const res = await fetch('https://api.telegram.org/bot' + token + '/sendMessage', {
+      const res = await fetch(LEAD_API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: chatId, text: text }),
+        body: JSON.stringify({ name, company, task }),
       });
       const data = await res.json();
       if (data.ok) {
         document.getElementById('form-fields').style.display = 'none';
         document.getElementById('form-success').style.display = 'block';
       } else {
-        throw new Error(data.description || 'Telegram API error');
+        throw new Error(data.error || 'Server error');
       }
     } catch (err) {
       btn.disabled = false;
