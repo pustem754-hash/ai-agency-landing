@@ -579,9 +579,38 @@
       box-shadow: 0 0 24px var(--accent-glow);
     }
 
-    .form-submit:hover {
+    .form-submit:hover:not(:disabled) {
       background: var(--accent-light);
       transform: translateY(-1px);
+    }
+
+    .form-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 20px 0 8px;
+    }
+
+    .form-success-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+
+    .form-success h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .form-success p {
+      font-size: 15px;
+      color: var(--text-muted);
     }
 
     /* FOOTER */
@@ -808,22 +837,29 @@
           </div>
         </div>
       </div>
-      <div class="form">
-        <div class="form-group">
-          <label for="name">Ваше имя</label>
-          <input type="text" id="name" placeholder="Иван Иванов">
+      <div class="form" id="contact-form">
+        <div id="form-fields">
+          <div class="form-group">
+            <label for="name">Ваше имя</label>
+            <input type="text" id="name" placeholder="Иван Иванов">
+          </div>
+          <div class="form-group">
+            <label for="company">Компания</label>
+            <input type="text" id="company" placeholder="ООО Ромашка">
+          </div>
+          <div class="form-group">
+            <label for="task">Задача</label>
+            <textarea id="task" placeholder="Опишите, что хотите автоматизировать или какую ИИ-систему нужно построить..."></textarea>
+          </div>
+          <button id="form-btn" class="form-submit" type="button">
+            Отправить заявку
+          </button>
         </div>
-        <div class="form-group">
-          <label for="company">Компания</label>
-          <input type="text" id="company" placeholder="ООО Ромашка">
+        <div class="form-success" id="form-success">
+          <div class="form-success-icon">✅</div>
+          <h3>Заявка отправлена!</h3>
+          <p>Мы свяжемся с вами в течение нескольких часов.</p>
         </div>
-        <div class="form-group">
-          <label for="task">Задача</label>
-          <textarea id="task" placeholder="Опишите, что хотите автоматизировать или какую ИИ-систему нужно построить..."></textarea>
-        </div>
-        <a id="tg-send" href="https://t.me/rustem_work" class="form-submit" target="_blank">
-          Отправить в Telegram
-        </a>
       </div>
     </div>
   </div>
@@ -853,22 +889,46 @@
 
   document.querySelectorAll('.service-card, .plan').forEach(el => observer.observe(el));
 
-  // Telegram form link builder
-  document.getElementById('tg-send').addEventListener('click', function(e) {
+  // Form submission via Telegram Bot API
+  document.getElementById('form-btn').addEventListener('click', async function() {
+    const btn = this;
     const name = document.getElementById('name').value.trim();
     const company = document.getElementById('company').value.trim();
     const task = document.getElementById('task').value.trim();
 
-    const parts = [];
-    if (name) parts.push('Имя: ' + name);
-    if (company) parts.push('Компания: ' + company);
-    if (task) parts.push('Задача: ' + task);
+    if (!name && !task) {
+      document.getElementById('name').focus();
+      return;
+    }
 
-    if (parts.length > 0) {
-      const text = encodeURIComponent(parts.join('\n'));
-      this.href = 'https://t.me/rustem_work?text=' + text;
-    } else {
-      this.href = 'https://t.me/rustem_work';
+    btn.disabled = true;
+    btn.textContent = 'Отправляем...';
+
+    const lines = ['📬 Новая заявка с сайта'];
+    if (name) lines.push('👤 Имя: ' + name);
+    if (company) lines.push('🏢 Компания: ' + company);
+    if (task) lines.push('📝 Задача: ' + task);
+    const text = lines.join('\n');
+
+    try {
+      const token = '8771724456:AAGkjVHJVZAQQyDYaethQQNKHApx8r4D9Ns';
+      const chatId = '2061792301';
+      const res = await fetch('https://api.telegram.org/bot' + token + '/sendMessage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, text: text }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        document.getElementById('form-fields').style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+      } else {
+        throw new Error(data.description || 'Telegram API error');
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Отправить заявку';
+      alert('Не удалось отправить заявку. Напишите напрямую: @rustem_work');
     }
   });
 
