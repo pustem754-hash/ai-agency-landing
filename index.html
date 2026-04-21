@@ -461,6 +461,37 @@
       background: var(--accent-light);
     }
 
+    /* PRICING NOTE */
+    .pricing-note {
+      margin-top: 60px;
+      text-align: center;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .pricing-note h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .pricing-note p {
+      color: var(--text-muted);
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+
+    .pricing-note .btn-primary {
+      display: inline-block;
+    }
+
     /* FORM */
     .contact {
       padding: 100px 0;
@@ -692,7 +723,7 @@
     <span>⚡</span>
     Агентство ИИ
   </a>
-  <a href="#contact" class="nav-cta">Обсудить проект</a>
+  <a href="https://t.me/rustem_work" target="_blank" rel="noopener" class="nav-cta">Обсудить проект</a>
 </nav>
 
 <!-- HERO -->
@@ -702,7 +733,7 @@
     <h1>Системное<br>агентство ИИ</h1>
     <p>Строим ИИ-системы под ключ: агенты, автоматизация, интеграции для вашего бизнеса</p>
     <div class="hero-buttons">
-      <a href="#contact" class="btn-primary">Обсудить проект</a>
+      <a href="https://t.me/rustem_work" target="_blank" rel="noopener" class="btn-primary">Обсудить проект</a>
       <a href="#services" class="btn-secondary">Наши услуги</a>
     </div>
     <div class="hero-stats">
@@ -726,7 +757,7 @@
 <section class="services" id="services">
   <div class="container">
     <div class="section-header">
-      <div class="section-label">Услуги</div>
+      <div class="section-label">Направления</div>
       <h2 class="section-title">Что мы строим</h2>
       <p class="section-sub">Полный цикл: от проектирования архитектуры до запуска в производство</p>
     </div>
@@ -755,57 +786,61 @@
   </div>
 </section>
 
-<!-- PRICING -->
+<!-- SERVICES FULL LIST -->
 <section class="pricing" id="pricing">
   <div class="container">
     <div class="section-header">
-      <div class="section-label">Тарифы</div>
-      <h2 class="section-title">Стоимость</h2>
-      <p class="section-sub">Прозрачное ценообразование. Оплата поэтапно, риски минимальны.</p>
+      <div class="section-label">Услуги</div>
+      <h2 class="section-title">Что мы делаем</h2>
+      <p class="section-sub">Полный перечень направлений. Берём задачи разного масштаба — от одной карточки товара до агентной экосистемы.</p>
     </div>
-    <div class="pricing-grid">
-      <div class="plan">
-        <div class="plan-name">Старт</div>
-        <div class="plan-price">50 000 ₽ <span>/ от</span></div>
-        <div class="plan-desc">Для малого бизнеса и первого ИИ-проекта</div>
-        <ul class="plan-features">
-          <li>Один специализированный агент</li>
-          <li>Telegram-бот или API-интеграция</li>
-          <li>До 3 инструментов и источников</li>
-          <li>Базовая память и контекст</li>
-          <li>2 недели поддержки</li>
-        </ul>
-        <a href="#contact" class="plan-cta outline">Обсудить</a>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🛒</div>
+        <h3>Карточки товаров Ozon и Wildberries</h3>
+        <p>SEO-инфографика, rich-контент, описания под алгоритмы маркетплейсов. Повышаем CTR и конверсию в корзину.</p>
       </div>
-      <div class="plan featured">
-        <div class="plan-badge">Популярный</div>
-        <div class="plan-name">Бизнес</div>
-        <div class="plan-price">150 000 ₽ <span>/ от</span></div>
-        <div class="plan-desc">Для компаний, готовых автоматизировать ключевые процессы</div>
-        <ul class="plan-features">
-          <li>Мультиагентная система (до 5 агентов)</li>
-          <li>Инструменты расширения и внешние API</li>
-          <li>Telegram + веб-интерфейс</li>
-          <li>Память, база знаний, аналитика</li>
-          <li>Мониторинг и логирование</li>
-          <li>1 месяц поддержки</li>
-        </ul>
-        <a href="#contact" class="plan-cta solid">Обсудить</a>
+      <div class="service-card">
+        <div class="service-icon">🌐</div>
+        <h3>Сайты и лендинги</h3>
+        <p>Быстрые, адаптивные, под ключ. HTML/CSS/JS, React, Next.js, Tailwind. От одностраничника до многостраничного проекта.</p>
       </div>
-      <div class="plan">
-        <div class="plan-name">Корпоративный</div>
-        <div class="plan-price">500 000 ₽ <span>/ от</span></div>
-        <div class="plan-desc">Для крупных задач с полным ИИ-преобразованием</div>
-        <ul class="plan-features">
-          <li>Полная агентная экосистема</li>
-          <li>Индивидуальные инструменты расширения</li>
-          <li>Тонкая настройка на ваших данных</li>
-          <li>Развёртывание на вашей инфраструктуре</li>
-          <li>Обучение команды</li>
-          <li>3 месяца поддержки и развития</li>
-        </ul>
-        <a href="#contact" class="plan-cta outline">Обсудить</a>
+      <div class="service-card">
+        <div class="service-icon">✈️</div>
+        <h3>Telegram-боты и автоматизация</h3>
+        <p>Умные боты с ИИ, командами, состоянием, интеграциями. Автоматизируем рутину: рассылки, заявки, ответы клиентам.</p>
       </div>
+      <div class="service-card">
+        <div class="service-icon">🕸️</div>
+        <h3>Парсинг данных и мониторинг</h3>
+        <p>Сбор данных с сайтов, маркетплейсов, соцсетей. Мониторинг цен, позиций, конкурентов. Выгрузка в Excel, Google Sheets, БД.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✍️</div>
+        <h3>SEO-контент и статьи</h3>
+        <p>Тексты под поисковые запросы, экспертные статьи, описания. С учётом LSI, структуры, E-E-A-T и требований поисковиков.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🧠</div>
+        <h3>AI-ассистенты под ваш бизнес</h3>
+        <p>Умный помощник на вашей базе знаний: отвечает клиентам, консультирует сотрудников, работает с документами и CRM.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔍</div>
+        <h3>Глубокий ресёрч и аналитика</h3>
+        <p>Исследуем рынок, конкурентов, тренды, ниши. Многоэтапный поиск, сводный отчёт с выводами и рекомендациями.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔗</div>
+        <h3>Интеграции с Figma, Google Sheets, Telegram</h3>
+        <p>Связываем ваши инструменты в единый рабочий контур. API, вебхуки, MCP-серверы, синхронизация данных в обе стороны.</p>
+      </div>
+    </div>
+
+    <div class="pricing-note">
+      <h3>Стоимость обсуждается индивидуально под задачу</h3>
+      <p>Напишите нам — обсудим за 10–15 минут, дадим точную оценку.</p>
+      <a href="https://t.me/rustem_work" target="_blank" rel="noopener" class="btn-primary">Обсудить проект</a>
     </div>
   </div>
 </section>
