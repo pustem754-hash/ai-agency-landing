@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Системное агентство ИИ — разработка ИИ-систем в Казани | ИП Миннуллин Р.З.</title>
-  <meta name="description" content="Разработка ИИ-систем под ключ в Казани: чат-боты, автоматизация бизнес-процессов, интеграции. ИП Миннуллин Р.З. Звоните: +7 987 407 4965">
+  <title>Системное агентство ИИ — разработка ИИ-систем в Казани | ИП Миннуллин Рустем Зуфарович</title>
+  <meta name="description" content="Разработка ИИ-систем под ключ в Казани: чат-боты, автоматизация бизнес-процессов, интеграции. ИП Миннуллин Рустем Зуфарович Звоните: +7 987 407 4965">
   <meta name="keywords" content="ИИ-системы Казань, искусственный интеллект, автоматизация бизнеса, чат-бот на заказ, разработка ИИ, агентство искусственного интеллекта, Telegram-бот, умные боты">
   <meta name="robots" content="index, follow">
-  <meta name="author" content="ИП Миннуллин Р.З.">
+  <meta name="author" content="ИП Миннуллин Рустем Зуфарович">
   <meta name="geo.region" content="RU-TA">
   <meta name="geo.placename" content="Казань">
-  <meta property="og:title" content="Системное агентство ИИ — ИП Миннуллин Р.З.">
+  <meta property="og:title" content="Системное агентство ИИ — ИП Миннуллин Рустем Зуфарович">
   <meta property="og:description" content="Разработка ИИ-систем под ключ в Казани: агенты, автоматизация, интеграции.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ru_RU">
@@ -882,6 +882,10 @@
             <label for="task">Задача</label>
             <textarea id="task" placeholder="Опишите, что хотите автоматизировать или какую ИИ-систему нужно построить..."></textarea>
           </div>
+          <label style="display:flex;align-items:flex-start;gap:8px;margin:16px 0;font-size:13px;color:var(--text-muted);cursor:pointer;">
+            <input type="checkbox" id="consent" required checked style="margin-top:3px;flex-shrink:0;">
+            <span>Нажимая кнопку, я соглашаюсь с <a href="/privacy.html" target="_blank" style="color:var(--accent);text-decoration:underline;">политикой обработки персональных данных</a></span>
+          </label>
           <button id="form-btn" class="form-submit" type="button">
             Отправить заявку
           </button>
@@ -902,7 +906,7 @@
   <div class="footer-links">
     <a href="/privacy.html">Политика конфиденциальности</a>
   </div>
-  <div class="footer-copy">© 2026 ИП Миннуллин Р.З. Все права защищены. Казань.</div>
+  <div class="footer-copy">© 2026 ИП Миннуллин Рустем Зуфарович | ОГРНИП 326169000097330 | ИНН 165803701444 | г. Казань | Все права защищены.</div>
 </footer>
 
 <script>
@@ -931,6 +935,11 @@
 
     if (!name && !task) {
       document.getElementById('name').focus();
+      return;
+    }
+
+    if (!document.getElementById('consent').checked) {
+      alert('Подтвердите согласие на обработку персональных данных');
       return;
     }
 
