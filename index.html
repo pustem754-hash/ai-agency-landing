@@ -966,6 +966,16 @@
       if (data.ok) {
         document.getElementById('form-fields').style.display = 'none';
         document.getElementById('form-success').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('name').value = '';
+          document.getElementById('company').value = '';
+          document.getElementById('task').value = '';
+          document.getElementById('consent').checked = true;
+          btn.disabled = false;
+          btn.textContent = 'Отправить заявку';
+          document.getElementById('form-success').style.display = 'none';
+          document.getElementById('form-fields').style.display = 'block';
+        }, 5000);
       } else {
         throw new Error(data.error || 'Server error');
       }
