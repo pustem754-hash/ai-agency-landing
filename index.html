@@ -896,6 +896,7 @@
             <input type="checkbox" id="consent" required checked style="margin-top:3px;flex-shrink:0;">
             <span>Нажимая кнопку, я соглашаюсь с <a href="privacy.html" target="_blank" style="color:var(--accent);text-decoration:underline;">политикой обработки персональных данных</a></span>
           </label>
+          <input type="text" name="website" id="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;height:0;width:0" />
           <button id="form-btn" class="form-submit" type="button">
             Отправить заявку
           </button>
@@ -956,11 +957,13 @@
     btn.disabled = true;
     btn.textContent = 'Отправляем...';
 
+    const website = document.getElementById('website').value;
+
     try {
       const res = await fetch(LEAD_API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, company, task }),
+        body: JSON.stringify({ name, company, task, website }),
       });
       const data = await res.json();
       if (data.ok) {
