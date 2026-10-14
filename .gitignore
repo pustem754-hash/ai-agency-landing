@@ -1,0 +1,13 @@
+.omc/
+.playwright-mcp/
+# screenshots in the repo root (site images live elsewhere)
+/*.png
+/*.jpg
+/*.jpeg
+node_modules/
+dist/
+.env*
+!.env.example
+*credentials*
+*.key
+*.pem
